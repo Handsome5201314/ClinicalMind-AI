@@ -1,0 +1,230 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ClinicalMind AI - Telemedicine Workstation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+      :root {
+        /* Default Dark Theme (Sci-Fi / Cyan) */
+        --c-slate-50: #f8fafc;
+        --c-slate-100: #f1f5f9;
+        --c-slate-200: #e2e8f0;
+        --c-slate-300: #cbd5e1;
+        --c-slate-400: #94a3b8;
+        --c-slate-500: #64748b;
+        --c-slate-600: #475569;
+        --c-slate-700: #334155;
+        --c-slate-800: #1e293b;
+        --c-slate-850: #151e32;
+        --c-slate-900: #0f172a;
+        --c-slate-950: #020617;
+        
+        --c-bg-950: var(--c-slate-950);
+
+        /* Primary Brand Colors (Default: Cyan) */
+        --c-primary-50: #ecfeff;
+        --c-primary-100: #cffafe;
+        --c-primary-200: #a5f3fc;
+        --c-primary-300: #67e8f9;
+        --c-primary-400: #22d3ee;
+        --c-primary-500: #06b6d4;
+        --c-primary-600: #0891b2;
+        --c-primary-700: #0e7490;
+        --c-primary-800: #155e75;
+        --c-primary-900: #164e63;
+        --c-primary-950: #083344;
+      }
+
+      /* Emerald Theme (Green) */
+      body.theme-emerald-dark {
+        --c-primary-50: #ecfdf5;
+        --c-primary-100: #d1fae5;
+        --c-primary-200: #a7f3d0;
+        --c-primary-300: #6ee7b7;
+        --c-primary-400: #34d399;
+        --c-primary-500: #10b981;
+        --c-primary-600: #059669;
+        --c-primary-700: #047857;
+        --c-primary-800: #065f46;
+        --c-primary-900: #064e3b;
+        --c-primary-950: #022c22;
+      }
+
+      /* Rose Theme (Red) */
+      body.theme-rose-dark {
+        --c-primary-50: #fff1f2;
+        --c-primary-100: #ffe4e6;
+        --c-primary-200: #fecdd3;
+        --c-primary-300: #fda4af;
+        --c-primary-400: #fb7185;
+        --c-primary-500: #f43f5e;
+        --c-primary-600: #e11d48;
+        --c-primary-700: #be123c;
+        --c-primary-800: #9f1239;
+        --c-primary-900: #881337;
+        --c-primary-950: #4c0519;
+      }
+
+      /* Light Theme Override */
+      body.theme-blue-light {
+        /* Invert Backgrounds */
+        --c-slate-950: #f0f4f8; 
+        --c-slate-900: #ffffff; 
+        --c-slate-850: #f8fafc; 
+        --c-slate-800: #cbd5e1; 
+        
+        /* Invert Text */
+        --c-slate-700: #94a3b8; 
+        --c-slate-600: #64748b; 
+        --c-slate-500: #475569; 
+        --c-slate-400: #334155; 
+        --c-slate-300: #1e293b; 
+        --c-slate-200: #334155; 
+        --c-slate-100: #0f172a; 
+        --c-slate-50:  #020617; 
+      }
+
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--c-bg-950); 
+        color: var(--c-slate-200);
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      /* Scrollbars */
+      ::-webkit-scrollbar { width: 6px; height: 6px; }
+      ::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); }
+      ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.3); border-radius: 3px; }
+      ::-webkit-scrollbar-thumb:hover { background: rgba(148, 163, 184, 0.5); }
+      
+      .glass-panel {
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      }
+      
+      body.theme-blue-light .glass-panel {
+        background: rgba(255, 255, 255, 0.85); 
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.05);
+      }
+
+      .monitor-panel {
+        background: rgba(0, 0, 0, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      
+      body.theme-blue-light .monitor-panel {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      }
+      
+      .input-glow:focus {
+        box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.3);
+      }
+    </style>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              slate: {
+                50: 'var(--c-slate-50)',
+                100: 'var(--c-slate-100)',
+                200: 'var(--c-slate-200)',
+                300: 'var(--c-slate-300)',
+                400: 'var(--c-slate-400)',
+                500: 'var(--c-slate-500)',
+                600: 'var(--c-slate-600)',
+                700: 'var(--c-slate-700)',
+                800: 'var(--c-slate-800)',
+                850: 'var(--c-slate-850)',
+                900: 'var(--c-slate-900)',
+                950: 'var(--c-slate-950)',
+              },
+              // Map both Cyan and Sky to Primary variables to unify the theme colors
+              cyan: {
+                50: 'var(--c-primary-50)',
+                100: 'var(--c-primary-100)',
+                200: 'var(--c-primary-200)',
+                300: 'var(--c-primary-300)',
+                400: 'var(--c-primary-400)',
+                500: 'var(--c-primary-500)',
+                600: 'var(--c-primary-600)',
+                700: 'var(--c-primary-700)',
+                800: 'var(--c-primary-800)',
+                900: 'var(--c-primary-900)',
+                950: 'var(--c-primary-950)',
+              },
+              sky: {
+                50: 'var(--c-primary-50)',
+                100: 'var(--c-primary-100)',
+                200: 'var(--c-primary-200)',
+                300: 'var(--c-primary-300)',
+                400: 'var(--c-primary-400)',
+                500: 'var(--c-primary-500)',
+                600: 'var(--c-primary-600)',
+                700: 'var(--c-primary-700)',
+                800: 'var(--c-primary-800)',
+                900: 'var(--c-primary-900)',
+                950: 'var(--c-primary-950)',
+              }
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              mono: ['JetBrains Mono', 'monospace'],
+            },
+            animation: {
+              'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'ecg-swipe': 'ecgMove 2s linear infinite',
+              'ecg-scroll': 'scrollLeft 2s linear infinite',
+              'fade-in-up': 'fadeInUp 0.5s ease-out',
+              'fade-in-left': 'fadeInLeft 0.5s ease-out',
+            },
+            keyframes: {
+              ecgMove: {
+                '0%': { transform: 'translateX(-100%)' },
+                '100%': { transform: 'translateX(100%)' }
+              },
+              scrollLeft: {
+                '0%': { transform: 'translateX(0)' },
+                '100%': { transform: 'translateX(-50%)' }
+              },
+              fadeInUp: {
+                '0%': { opacity: '0', transform: 'translateY(10px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' }
+              },
+              fadeInLeft: {
+                '0%': { opacity: '0', transform: 'translateX(20px)' },
+                '100%': { opacity: '1', transform: 'translateX(0)' }
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <script type="importmap">
+{
+  "imports": {
+    "react-dom/client": "https://aistudiocdn.com/react-dom@^19.2.1/client",
+    "react-dom": "https://aistudiocdn.com/react-dom@^19.2.1",
+    "react/": "https://aistudiocdn.com/react@^19.2.1/",
+    "react": "https://aistudiocdn.com/react@^19.2.1",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.32.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.1/"
+  }
+}
+</script>
+</head>
+  <body class="h-screen overflow-hidden text-slate-200">
+    <div id="root" class="h-full"></div>
+  </body>
+</html>

@@ -1,0 +1,5 @@
+{
+  "name": "ClinicalMind AI",
+  "description": "A high-fidelity clinical diagnostic simulation for medical students using Gemini API.",
+  "requestFramePermissions": []
+}
